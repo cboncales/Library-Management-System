@@ -9,6 +9,10 @@ https://docs.djangoproject.com/en/5.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
+import environ
+
+env = environ.Env()
+environ.Env.read_env()
 
 from pathlib import Path
 
@@ -78,11 +82,11 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'libdb',  # Replace with your database name
-        'USER': 'postgres',  # Replace with your PostgreSQL username
-        'PASSWORD': '2001',  # Replace with your PostgreSQL password
-        'HOST': 'localhost',  # Use '127.0.0.1' if not using localhost
-        'PORT': '5432',  # Default PostgreSQL port
+        'NAME': env('DATABASE_NAME'), 
+        'USER': env('DATABASE_USER'),
+        'PASSWORD': env('DATABASE_PASSWORD'),
+        'HOST': env('DATABASE_HOST'),
+        'PORT': env('DATABASE_PORT'),  
     }
 }
 

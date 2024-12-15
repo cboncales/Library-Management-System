@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Book, User, BorrowRecord
+from .models import Book, User, BorrowedBook, ActivityLog
 
 class BookSerializer(serializers.ModelSerializer):
     class Meta:
@@ -11,7 +11,17 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = '__all__'
 
-class BorrowRecordSerializer(serializers.ModelSerializer):
+class BorrowedBookSerializer(serializers.ModelSerializer):
+    user = serializers.CharField(source='user.username', read_only=True)
+    book = serializers.CharField(source='book.title', read_only=True)
+
     class Meta:
-        model = BorrowRecord
+        model = BorrowedBook
+        fields = '__all__'
+
+class ActivityLogSerializer(serializers.ModelSerializer):
+    user = serializers.CharField(source='user.username', read_only=True)
+
+    class Meta:
+        model = ActivityLog
         fields = '__all__'

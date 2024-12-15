@@ -4,12 +4,14 @@ import axios from 'axios'
 
 // Reactive state for books and table headers
 const books = ref([])
-const headers = [
+const headers = ref([
   { text: 'Title', value: 'title' },
   { text: 'Author', value: 'author' },
   { text: 'ISBN', value: 'isbn' },
   { text: 'Available Copies', value: 'available_copies' },
-]
+])
+
+console.log(headers)
 
 // Fetch books from the backend
 const fetchBooks = async () => {
@@ -24,6 +26,7 @@ onMounted(fetchBooks)
 <template>
   <v-container>
     <h2>Books</h2>
+    <pre>{{ headers }}</pre>
     <v-data-table :headers="headers" :items="books" class="elevation-1">
       <template v-slot:top>
         <v-toolbar flat>

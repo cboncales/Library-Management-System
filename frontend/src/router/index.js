@@ -1,8 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import Home from './views/Home.vue'
-import Books from './views/Books.vue'
-import Users from './views/Users.vue'
-import Borrow from './views/Borrow.vue'
+import Home from '@/views/Home.vue'
+import Books from '@/views/Books.vue'
+import Users from '@/views/User.vue'
+import Borrow from '@/views/Borrow.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),

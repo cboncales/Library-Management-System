@@ -5,14 +5,14 @@ import axios from 'axios'
 // Reactive state for users and table headers
 const users = ref([])
 const headers = [
-  { text: 'Username', value: 'username' },
-  { text: 'Email', value: 'email' },
-  { text: 'Role', value: 'role' },
+  { title: 'Username', value: 'username' },
+  { title: 'Email', value: 'email' },
+  { title: 'Role', value: 'role' },
 ]
 
 // Fetch users from the backend
 const fetchUsers = async () => {
-  const response = await axios.get('http://127.0.0.1:8000/api/users/')
+  const response = await axios.get('http://127.0.0.1:8000/users/')
   users.value = response.data
 }
 

@@ -5,17 +5,17 @@ import axios from 'axios'
 // Reactive state for borrowed books and table headers
 const borrowedBooks = ref([])
 const headers = [
-  { text: 'Book Title', value: 'book_title' },
-  { text: 'Borrowed Date', value: 'borrowed_date' },
-  { text: 'Due Date', value: 'due_date' },
-  { text: 'Returned Date', value: 'returned_date' },
-  { text: 'Fine Amount', value: 'fine_amount' },
+  { title: 'Book Title', value: 'book_title' },
+  { title: 'Borrowed Date', value: 'borrowed_date' },
+  { title: 'Due Date', value: 'due_date' },
+  { title: 'Returned Date', value: 'returned_date' },
+  { title: 'Fine Amount', value: 'fine_amount' },
 ]
 
 // Fetch borrowed books for a specific user (use actual user_id in the URL)
 const fetchBorrowedBooks = async () => {
   const userId = 'some-user-uuid' // Replace with dynamic user ID
-  const response = await axios.get(`http://127.0.0.1:8000/api/borrowed_books/${userId}/`)
+  const response = await axios.get(`http://127.0.0.1:8000/borrow_records/`)
   borrowedBooks.value = response.data
 }
 

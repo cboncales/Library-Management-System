@@ -1,5 +1,6 @@
 <script setup>
 import { ref, onMounted } from 'vue'
+import Navbar from '@/components/Navbar.vue'
 import axios from 'axios'
 
 // Reactive state for books and table headers
@@ -24,6 +25,7 @@ onMounted(fetchBooks)
 </script>
 
 <template>
+  <Navbar />
   <v-container>
     <h2 class="text-center my-5">BOOKS</h2>
     <v-data-table :headers="headers" :items="books" class="elevation-1">
@@ -31,7 +33,7 @@ onMounted(fetchBooks)
         <v-toolbar flat>
           <v-toolbar-title>Book List</v-toolbar-title>
           <v-spacer></v-spacer>
-          <v-btn color="primary" @click="fetchBooks">Refresh</v-btn>
+          <v-btn color="primary" @click="fetchBooks()">Refresh</v-btn>
         </v-toolbar>
       </template>
     </v-data-table>

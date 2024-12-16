@@ -1,5 +1,6 @@
 <script setup>
 import { ref, onMounted } from 'vue'
+import Navbar from '@/components/Navbar.vue'
 import axios from 'axios'
 
 // Reactive state for borrowed books and table headers
@@ -23,6 +24,7 @@ const fetchBorrowedBooks = async () => {
 onMounted(fetchBorrowedBooks)
 </script>
 <template>
+  <Navbar />
   <v-container>
     <h2>Borrowed Books</h2>
     <v-data-table :headers="headers" :items="borrowedBooks" class="elevation-1">

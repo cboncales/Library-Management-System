@@ -10,11 +10,12 @@ class User(models.Model):
     ROLE_CHOICES = [
         ('Admin', 'Admin'),
         ('Librarian', 'Librarian'),
-        ('Member', 'Member'),
+        ('Cataloger', 'Cataloger'),
     ]
 
     user_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    username = models.CharField(max_length=100, unique=True)
+    first_name = models.CharField(max_length=50)
+    last_name = models.CharField(max_length=50)
     email = models.EmailField(unique=True)
     password = models.CharField(max_length=255)  
     role = models.CharField(max_length=50, choices=ROLE_CHOICES)
@@ -22,18 +23,18 @@ class User(models.Model):
     updated_at = models.DateTimeField(auto_now=True)  
 
     def __str__(self):
-        return self.username
+        return f"{self.first_name} {self.last_name}"
 
 
 class Book(models.Model):
     book_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    isbn = models.CharField(max_length=13, unique=True, null=True)
+    isbn = models.CharField(max_length=13, unique=True)
     title = models.CharField(max_length=255)
     author = models.CharField(max_length=255)
-    publisher = models.CharField(max_length=255, null=True, blank=True)
-    year_published = models.PositiveIntegerField(null=True, blank=True)
-    category = models.CharField(max_length=100, null=True, blank=True)
-    total_copies = models.PositiveIntegerField(null=True, blank=True)
+    publisher = models.CharField(max_length=255)
+    year_published = models.PositiveIntegerField()
+    category = models.CharField(max_length=100)
+    total_copies = models.PositiveIntegerField()
     available_copies = models.PositiveIntegerField()
     created_at = models.DateTimeField(default=timezone.now) 
     updated_at = models.DateTimeField(auto_now=True)  
@@ -48,11 +49,11 @@ class BorrowedBook(models.Model):
     book = models.ForeignKey(Book, on_delete=models.CASCADE)
     borrowed_date = models.DateTimeField(default=timezone.now)
     due_date = models.DateTimeField()
-    returned_date = models.DateTimeField(null=True, blank=True)
+    returned_date = models.DateTimeField()
     fine_amount = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
 
     def __str__(self):
-        return f"{self.user.username} borrowed {self.book.title}"
+        return f"{self.user.first_name} {self.user.last_name} borrowed {self.book.title}"
 
 
 class ActivityLog(models.Model):
@@ -63,8 +64,9 @@ class ActivityLog(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)  
 
     def __str__(self):
-        return f"{self.action_type} on {self.table_name} by {self.user.username if self.user else 'Unknown'}"
-
+        if self.user:
+            return f"{self.action_type} on {self.table_name} by {self.user.first_name} {self.user.last_name}"
+        return f"{self.action_type} on {self.table_name} by Unknown"
 
 class BorrowedBooksSummary(models.Model):
     user_id = models.UUIDField()
